@@ -1,0 +1,25 @@
+services:
+  openresty:
+    build:
+      context: .
+      dockerfile: Dockerfile  
+    container_name: openresty
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./resty_din_rate_limit.lua:/usr/local/openresty/lua/resty_din_rate_limit.lua
+      - ./rate_limit.json:/usr/local/openresty/lua/rate_limit.json
+    depends_on:
+      - backend
+    environment:
+      - REDIS_HOST=redis
+      - NGINX_ERROR_LOG=/dev/stdout
+    restart: always
+
+  backend:
+    image: nginx:alpine
+    container_name: backend
+    ports:
+      - "5000:80"
+    restart: always
