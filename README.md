@@ -35,6 +35,10 @@ api_keys = [
     "api_key_3",
 ]
 ```
+Previously dependencies must be installed.
+```
+pip install -r requirements.txt
+```
 This script accepts the number of requests per second (req/s) to be tested as a command-line argument. For example:
 
 ```bash
